@@ -26,7 +26,6 @@ void Input(){
     }
 }
 
-
 void Solution(){
     for(int k=0; k<V; k++){
         for(int i=0; i<V; i++){
