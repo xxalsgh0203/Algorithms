@@ -65,7 +65,7 @@ int main(){
 
         for(int i=0; i<W; i++){
             int S, E, T;
-                        cin >> S >> E >> T;
+            cin >> S >> E >> T;
             city.push_back(make_pair(make_pair(S,E), -T));
 
         }
