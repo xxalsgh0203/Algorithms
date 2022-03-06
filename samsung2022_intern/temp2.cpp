@@ -11,10 +11,8 @@ int N;
 
 void calMin(int distance, int rem, int pindex, int fueled_car, int ins, int g_or_d)
 {
-	if(fueled_car==N)   // 모두 주유 되었을 때
-	{
-		if(min_dist>distance)
-		{
+	if(fueled_car==N){ // 모두 주유 되었을 때
+		if(min_dist>distance){
 			min_dist=distance;
 		}
 		return;
@@ -52,20 +50,17 @@ void calMin(int distance, int rem, int pindex, int fueled_car, int ins, int g_or
 		}
 	}
 
-	if(ins==1)
-	{
+	if(ins==1){
 		//fill gas and recall  
 		calMin(distance+(pindex-0), 2, 0, fueled_car, 0, 0);
 	}
-	if(ins==2)
-	{
+	if(ins==2){
 		//fill diesel and recall
 		calMin(distance+((N+1)-pindex) , 2, N+1, fueled_car, 0, 1);
 	}
 }
 
-int main(void)
-{
+int main(void){
 	int T, test_case;
 
 	cin >> T;
@@ -73,8 +68,7 @@ int main(void)
 	{
 		cin >> N; // 자동차 대수
 
-		for(int i=1; i<=N; i++)
-		{
+		for(int i=1; i<=N; i++){
 			cin >> arr[i];
 		}
 
