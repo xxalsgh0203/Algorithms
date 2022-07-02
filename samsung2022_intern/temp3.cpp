@@ -4,7 +4,6 @@
 using namespace std;
 
 int arr[7][7];
-bool visited[14];
 int N;
 int min_num = 987654321;
 
@@ -18,44 +17,56 @@ void swap(int* a, int* b){
     *b = temp;
 }
 
-void reverseColumnArray(int col_num){
+void reverseColumnArray(*int arr1[][7], int arr2[][7], int col_num){
     int start = 0;
     int end = N - 1;
  
     while (start < end) {
-        swap(arr[start][col_num], arr[end][col_num]);
+        swap(arr2[start][col_num], arr2[end][col_num]);
         start++;
         end--;
     }
+
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            arr1[i][j] = arr2[i][j];
+        }
+    }
 }
 
-void reverseRowArray(int row_num){
+void reverseRowArray(*int arr1[][7], int arr2[][7], int row_num){
     int start = 0;
     int end = N - 1;
 
     while (start < end) {
-        swap(arr[row_num][start], arr[row_num][end]);
+        swap(arr2[row_num][start], arr2[row_num][end]);
  
         start++;
         end--;
     }
+
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            arr1[i][j] = arr2[i][j];
+        }
+    }
 }
 
-void op(int row, int col, int cnt){
-    if(Check()){
-        min_num = min(min_num, cnt);
-        return;
+void op(int row, int col, int cnt, int arr_tmp[][7]){
+    if(Check(int arr_tmp[][])){
+        min_num = cnt;
     }
     if(cnt == 4)
         return;
 
     if(row == -1){
-        reverseColumnArray(col);
+        int temp[][];
+        reverseColumnArray(&temp, arr_temp, col);
         op(-1,col+1,cnt+1);
         op(row+1,-1,cnt+1);
     }
     if(col == -1){
-        reverseRowArray(row);
+        reverseRowArray(&temp, arr_temp, row);
         op(-1,col+1,cnt+1);
         op(row+1,-1,cnt+1);
     }
@@ -66,10 +77,10 @@ void Solve(){
     op(-1, 1, 0);
 }
 
-bool Check(){
+bool Check(int arr_temp[][7]){
     for(int i=0; i<N; i++){
         for(int j=0; j<N; j++){
-            if(arr[i][j] > arr[i][j+1] || arr[i][j] > arr[i+1][0])
+            if(arr_temp[i][j] > arr_temp[i][j+1] || arr_temp[i][j] > arr_temp[i+1][0])
                 return false;
         }
     }

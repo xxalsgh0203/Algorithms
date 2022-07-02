@@ -65,7 +65,8 @@
         "unordered_map": "cpp",
         "set": "cpp",
         "__tree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "__functional_03": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
