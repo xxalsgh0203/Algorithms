@@ -19,12 +19,12 @@ public:
 
         if(inRange(y, x, grid.size(), grid[0].size())){
             if(grid[y][x] == 1){    
-                if(grid[y][x+1] == 1 && inRange(y, x+1, grid.size(), grid[0].size())){  // can direct ball to right side
+                if(inRange(y, x+1, grid.size(), grid[0].size()) && grid[y][x+1] == 1){  // can direct ball to right side
                     return DFS(grid, y+1, x+1);
                 }
             }
             else{ 
-                if(grid[y][x-1] == -1 && inRange(y, x-1, grid.size(), grid[0].size())){ // can direct ball to left side
+                if(inRange(y, x-1, grid.size(), grid[0].size()) && grid[y][x-1] == -1){ // can direct ball to left side
                     return DFS(grid, y+1, x-1);
                 }
             }
