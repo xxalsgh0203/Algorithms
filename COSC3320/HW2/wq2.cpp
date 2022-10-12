@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#define MAX 5 // 1부터 5까지 수의 순열을 구한다.
+#define MAX 4 // 1부터 5까지 수의 순열을 구한다.
 
 using namespace std;
 
@@ -11,12 +11,12 @@ int visit[MAX];
 
 void print_permutation() { // 순열 출력
     for (int i = 0; i < result.size(); i++) {
-        cout << result.at(i) << " ";
+        cout << result[i] << " ";
     }
     cout << endl;
 }
 
-void derangement(int count) { // count개의 수를 이용해 순열을 만든다.
+void derangement(int count) { // count개의 수를 이용해 순열을 만든다.ㅑㄹㄹ랴
     if (count == 5) {
         print_permutation();
         return;
