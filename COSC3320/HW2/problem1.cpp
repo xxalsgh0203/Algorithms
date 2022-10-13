@@ -1,37 +1,35 @@
+// Submission ID : dc16bf53-1c60-4918-9dfc-ab6f5aef3cb9
+
 #include<stdio.h>
 #include<stdlib.h>
+#include <iostream>
 #define MAX 8
 
 using namespace std;
 
-bool row[8];
-bool col[8];
-bool visited[8][8];
+int nqueen(int cnt, int start, int size, int total, bool* row, bool* col, char (*board)[8]){
 
-void nqueen(int cnt, int stored_queen, int n, int chess, int& count, char (*board)[8]){
-    if(stored_queen == chess){
-        count++;
-        return;
-    }
+    if(cnt == total)
+        return 1;
 
-    for(int i=0; i<n; i++){
-        for(int j=0; j<n; j++){
-            if(row[i] == false && col[j] == false && board[i][j] == '#'){
-                row[i] = true;
-                col[j] = true;
-                // visited[i][j] = true;
+    if(start == size)
+        return 0;
 
-                nqueen(cnt+1, stored_queen+1, n, chess, count, board);
+    int result = 0;
 
-                row[i] = false;
-                col[j] = false;
-                stored_queen--;
-                cnt--;
-                // visited[i][j] = false;
-            }
+    for(int i=0; i<size; i++){
+        if(board[start][i] == '#' && !row[start] && !col[i]){
+            row[start] = true;
+            col[i] = true;
+            result += nqueen(cnt+1, start+1, size, total, row, col, board);
+
+            row[start] = false;
+            col[i] = false;
         }
     }
 
+    result += nqueen(cnt, start+1, size, total, row, col, board);
+    return result;
 }
 
 int main(int argc, char *argv[])
@@ -40,6 +38,8 @@ int main(int argc, char *argv[])
     int n,k;
     int i,j;
     char board[8][8];
+    bool row[8];
+    bool col[8];
     fscanf(stdin, "%d %d", &n, &k);
     char tmp;
     fscanf(stdin, "%c", &tmp);
@@ -53,7 +53,12 @@ int main(int argc, char *argv[])
         fscanf(stdin, "%c", &tmp);
     }
 
-    nqueen(0, 0, n, k, count, board);
+    for(int i=0; i<n; i++){
+        row[i] = false;
+        col[i] = false;
+    }
+
+    count = nqueen(0, 0, n, k, row, col, board);
 
     /*
     Write your code here.
@@ -66,3 +71,4 @@ int main(int argc, char *argv[])
     printf("%d\n", count);
     return 0;
 }
+
