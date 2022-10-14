@@ -2,91 +2,108 @@
 // #include <stdio.h>
 // #include <stdlib.h>
 // #include <vector>
+// #include <unistd.h>
+// #include <sys/wait.h>
 // #include <algorithm>
+// #include <string.h>
 // using namespace std;
 
-// int DP(int n, int (*matrix)[101]){
-//     int dp_arr[101];
-//     vector<pair<int, int> > path;
-
-//     path.push_back(make_pair(0,0));
-
-//     dp_arr[0] = matrix[0];
-//     if(matrix[0][1] > matrix[1][1]){
-//         dp_arr[1] = dp_arr[0] + matrix[1][1];
-//         path.push_back(make_pair(1,1));
-//     }else{
-//         dp_arr[1] = dp_arr[0] + matrix[0][1];
-//         path.push_back(make_pair(0,1));
-//     }
-
-//     for(int i=2; i<n; i++){
-//         int cur_x = path[i].first;
-//         int cur_y = path[i].second;
-//         dp_arr[i] = min(dp_arr[i-2] + );
-//     }
-    
-// }
-
-
-// int main(){
-//     int m, n;
-
-//     fscanf(stdin, "%d %d", &m, &n);
-//     char tmp;
-//     fscanf(stdin, "%c", &tmp);
-
-//     int matrix[11][101];
-
-//     for (int i=0; i<m; i++)
+// #define ll long long int 
+// int a[1010][1010];
+// int dp[1010][1010];
+// int m,n;
+// int rec(int i,int j)
+// {
+//     if(j==n-1) return a[i][j];
+//     if(dp[i][j]!=-1) return dp[i][j];
+//     int ans=1e9;
+//     for(int k=-1;k<2;k++)
 //     {
-//         for (int j=0; j<n; j++)
+//         int y=i+k;
+//         y+=m;
+//         y%=m;
+//         ans=min(ans,a[i][j]+rec(y,j+1));
+//     }
+//     return dp[i][j]=ans;
+
+// }
+// int main()
+// {        
+//     cin>>m>>n;
+//     for(int i=0;i<m;i++)
+//     {
+//         for(int j=0;j<n;j++)
 //         {
-//             fscanf(stdin, "%c", &matrix[i][j]);
+//             cin>>a[i][j];
 //         }
-//         fscanf(stdin, "%c", &tmp);
+//     }
+//     memset(dp,-1,sizeof(dp));
+    
+//     cout<<rec(0,0)<<endl;
+
+//     for(int i=0; i<m; i++){
+//         for(int j=0; j<n; j++){
+//             cout << dp[i][j] << " ";
+//         }
+//         cout << '\n';
 //     }
 // }
 
 
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string.h>
 using namespace std;
-#define ll long long int 
-int a[1010][1010];
-int dp[1010][1010];
-int m,n;
-int rec(int i,int j)
-{
 
-    if(j==n-1) return a[i][j];
-    if(dp[i][j]!=-1) return dp[i][j];
-    int ans=1e9;
-    for(int k=-1;k<2;k++)
-    {
-        int y=i+k;
-        y+=m;
-        y%=m;
-        ans=min(ans,a[i][j]+rec(y,j+1));
-    }
-    return dp[i][j]=ans;
+int m, n;
+int matrix[11][101];
+int dp[11][101];
 
+bool inRange(int x, int y){
+    if(x>=0 && y>=0 && x<m && y<n)
+        return true;
+    else 
+        return false;
 }
-int main()
-{
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif    
-    cin>>m>>n;
-    for(int i=0;i<m;i++)
-    {
-        for(int j=0;j<n;j++)
-        {
-            cin>>a[i][j];
+
+void Solve(int x, int y){
+    if(y==n-1)
+        return;
+
+    for(int i=-1; i<2; i++){
+        int next_x = x + i;
+        next_x = next_x + m;
+        next_x = next_x % m;
+        int next_y = y + 1;
+        if(inRange(next_x, next_y)){
+            dp[next_x][next_y] = min(dp[next_x][next_y],dp[x][y] + matrix[next_x][next_y]);
+            Solve(next_x, next_y);
         }
     }
-    //cout<<rec(0,0)<<endl;
-    memset(dp,-1,sizeof(dp));
-    
-    cout<<rec(0,0)<<endl;
+}
+
+int main(){
+    cin >> m >> n;
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            cin >> matrix[i][j];
+        }
+    }
+
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            dp[i][j] = 987;
+        }
+    }
+    dp[0][0] = matrix[0][0];
+
+    Solve(0,0);
+
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            cout << dp[i][j] << " ";
+        }
+        cout << '\n';
+    }
+
+    cout << dp[m-1][n-1];
 }
