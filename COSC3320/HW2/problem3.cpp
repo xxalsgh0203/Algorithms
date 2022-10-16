@@ -1,62 +1,25 @@
-// #include <iostream>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <vector>
-// #include <unistd.h>
-// #include <sys/wait.h>
-// #include <algorithm>
-// #include <string.h>
-// using namespace std;
-
-// #define ll long long int 
-// int a[1010][1010];
-// int dp[1010][1010];
-// int m,n;
-// int rec(int i,int j)
-// {
-//     if(j==n-1) return a[i][j];
-//     if(dp[i][j]!=-1) return dp[i][j];
-//     int ans=1e9;
-//     for(int k=-1;k<2;k++)
-//     {
-//         int y=i+k;
-//         y+=m;
-//         y%=m;
-//         ans=min(ans,a[i][j]+rec(y,j+1));
-//     }
-//     return dp[i][j]=ans;
-
-// }
-// int main()
-// {        
-//     cin>>m>>n;
-//     for(int i=0;i<m;i++)
-//     {
-//         for(int j=0;j<n;j++)
-//         {
-//             cin>>a[i][j];
-//         }
-//     }
-//     memset(dp,-1,sizeof(dp));
-    
-//     cout<<rec(0,0)<<endl;
-
-//     for(int i=0; i<m; i++){
-//         for(int j=0; j<n; j++){
-//             cout << dp[i][j] << " ";
-//         }
-//         cout << '\n';
-//     }
-// }
-
+// Submission ID : b8e00ce2-2068-4773-8b4a-2955ae5b461a
 
 #include <iostream>
 #include <string.h>
+#include <vector>
 using namespace std;
 
 int m, n;
 int matrix[11][101];
 int dp[11][101];
+
+void reset(){
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            dp[i][j] = 1e9;
+        }
+    }
+
+    for(int i=0; i<m; i++){
+        dp[i][0] = matrix[i][0];
+    }
+}
 
 bool inRange(int x, int y){
     if(x>=0 && y>=0 && x<m && y<n)
@@ -82,6 +45,9 @@ void Solve(int x, int y){
 }
 
 int main(){
+
+    vector <int> result;
+
     cin >> m >> n;
     for(int i=0; i<m; i++){
         for(int j=0; j<n; j++){
@@ -90,20 +56,24 @@ int main(){
     }
 
     for(int i=0; i<m; i++){
-        for(int j=0; j<n; j++){
-            dp[i][j] = 987;
+        reset();
+        Solve(i,0);
+
+        int temp_result = 1e9;
+        for(int j=0; j<m; j++){
+            if(dp[j][n-1] < temp_result){
+                temp_result = dp[j][n-1];
+            }
         }
+        result.push_back(temp_result);
     }
-    dp[0][0] = matrix[0][0];
-
-    Solve(0,0);
-
-    for(int i=0; i<m; i++){
-        for(int j=0; j<n; j++){
-            cout << dp[i][j] << " ";
-        }
-        cout << '\n';
+    
+    int min_num = 1e9;
+    for(int i=0; i<result.size(); i++){
+        if(min_num > result[i])
+            min_num = result[i];
     }
 
-    cout << dp[m-1][n-1];
+    cout << min_num;
+
 }
