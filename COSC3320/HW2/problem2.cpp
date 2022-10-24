@@ -1,4 +1,4 @@
-// Submission ID : edde5233-2170-4443-a41c-fbce137b95ce
+// Submission ID : 9b4720e7-c2c6-4829-b33a-0111d339ea1b
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -53,13 +53,6 @@ int main(int argc, char* argv[])
     int output;
 
     output = calMaxDiff(arr, 0, n-1);
-
-    /*
-    Write your program here.
-    The array is stored in 'arr'.
-    The length of the array is stored in 'n'.
-    Compute the max(arr[j]-arr[i]) and store the result in 'outpur'
-    */
     
     printf("%d\n", output);
 
