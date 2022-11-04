@@ -1,45 +1,33 @@
 #include <iostream>
 using namespace std;
  
-int preIndex = 0;
+int cnt = 0;
  
-int search(int inorder[], int startIn,int endIn, int data)
-{
+int search(int inorder[], int startIn,int endIn, int data){
     int i = 0;
-    for (i = startIn; i < endIn; i++)
-    {
-        if (inorder[i] == data)
-        {
+    for (i = startIn; i < endIn; i++){
+        if (inorder[i] == data){
             return i;
         }
     }
     return i;
 }
-void printPost(int inorder[], int preorder[],int inStrt, int inEnd)
+void orderPost(int inStrt, int inEnd, int inorder[], int preorder[])
 {
-    if (inStrt > inEnd)
-    {
+    if (inStrt > inEnd){
         return;
     }
  
-    // Find index of next item in preorder
-    // traversal in inorder.
-    int inIndex = search(inorder, inStrt, inEnd,preorder[preIndex++]);
+    int inIndex = search(inorder, inStrt, inEnd,preorder[cnt++]);
+
+    orderPost( inStrt, inIndex - 1, inorder, preorder);
  
-    // traverse left tree
-    printPost(inorder, preorder, inStrt, inIndex - 1);
- 
-    // traverse right tree
-    printPost(inorder, preorder, inIndex + 1, inEnd);
- 
-    // print root node at the end of traversal
+    orderPost(inIndex + 1, inEnd, inorder, preorder);
+
     cout << inorder[inIndex] << " ";
 }
  
-// Driver code
-int main()
-{
-    
+int main(){
     int n;
     cin >> n;
     int preorder[n];
@@ -52,5 +40,5 @@ int main()
     for(int i=0; i<n; i++){
         cin >> inorder[i];
     }
-    printPost(inorder, preorder, 0, n-1);
+    orderPost(0, n-1, inorder, preorder);
 }
