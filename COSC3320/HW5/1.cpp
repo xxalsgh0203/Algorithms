@@ -36,7 +36,7 @@ int findSmallestPal(){
     for(int i = 0; i < n; i++){
         int minnum = str.length() - 1;
         if(Pal[0][i]){
-            Splits[i] = 0;
+            Splits[i] = 1;
         }
         else{
             for(int j = 0; j < i; j++){
@@ -48,7 +48,7 @@ int findSmallestPal(){
         }
     }
 
-    return Splits[n-1] + 1;
+    return Splits[n-1];
 }
 
 int main(){
