@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/n-queens/description/
+
 #include <iostream>
 #include <vector>
 using namespace std;

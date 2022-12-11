@@ -1,6 +1,5 @@
 // MST(최소 신장 트리) 를 만들기 위한 대표적 알고리즘 : 크루스칼, 프림 알고리즘
 
-
 // https://m.blog.naver.com/PostView.naver?blogId=ndb796&logNo=221230994142&referrerCode=0&searchKeyword=%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC
 
 // 1. 크루스칼 알고리즘
