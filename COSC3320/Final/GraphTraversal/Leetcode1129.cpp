@@ -1,33 +1,37 @@
-// https://leetcode.com/problems/maximum-subarray/
+// https://leetcode.com/problems/shortest-path-with-alternating-colors/
 
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& nums) {
-        int n = nums.size();
-        int dp[n];
-        dp[0] = nums[0];
-        int result = dp[0];
-        
-        for(int i = 1; i < n; i++){
-            dp[i] = nums[i] + (dp[i - 1] > 0 ? dp[i - 1] : 0);
-            result = max(result, dp[i]);
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& redEdges, vector<vector<int>>& blueEdges) {
+
+        vector <int> r;
+        vector <int> b;
+
+        vector <int> result;
+
+        vector<vector<pair<int, int> > > graph;
+        // red : 0
+        // blue : 1
+
+        for(int i=0; i<redEdges.size(); i++){
+            graph[redEdges[i][0]].push_back(make_pair(redEdges[i][1], 0));
         }
-        
-        return result;
+
+        for(int i=0; i<blueEdges.size(); i++){
+            graph[blueEdges[i][0]].push_back(make_pair(blueEdges[i][1], 1));
+        }
+
+        for(int i=0; i<graph.size(); i++){
+
+        }
     }
 };
 
 int main(){
-    Solution A;
-    vector<int> nums;
-    nums.push_back(5);
-    nums.push_back(4);
-    nums.push_back(-1);
-    nums.push_back(7);
-    nums.push_back(8);
-    cout << A.maxSubArray(nums);
+
 }
