@@ -6,7 +6,7 @@ using namespace std;
 
 int numofNodes, numofEdges;
 
-vector<int> Solve(int start, vector<pair<int,int> > graph[]){
+vector<int> FindMaxPath(int start, vector<pair<int,int> > graph[]){
     vector <int> dist(numofNodes, 0);
     priority_queue <pair<int, int> >  pq;
     
@@ -48,7 +48,7 @@ int main(){
 
     vector<int> result;
 
-    result = Solve(start, graph);
+    result = FindMaxPath(start, graph);
 
     // for(int i=0; i<result.size(); i++){
     //     cout << result[i] << " ";

@@ -6,7 +6,7 @@ using namespace std;
 
 class Solution {
     public:
-        int countSubstrings(string str) {
+        int Palindrom(string str) {
             int n = str.length();
             vector<vector<int>> Pal(n, vector<int> (n, 0));
 
