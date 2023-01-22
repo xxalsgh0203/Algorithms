@@ -1,16 +1,21 @@
-#include <stdio.h>
+#include <iostream>
+using namespace std;
 
 int main()
 {
-    int *numPtr1;  // 단일 포인터 선언
-    int **numPtr2; // 이중 포인터 선언
-    int num1 = 10;
 
-    numPtr1 = &num1; // num1의 메모리 주소 저장
+  // 1 2 3 4 5 6
 
-    numPtr2 = &numPtr1; // numPtr1의 메모리 주소 저장
+  string number = "123445634";
 
-    printf("%d\n", **numPtr2); // 20: 포인터를 두 번 역참조하여 num1의 메모리 주소에 접근
+  int length = number.length();
 
-    return 0;
+  for (int i = 0; i < length / 2; i++)
+  {
+    char temp = number[i];
+    number[i] = number[length - i - 1];
+    number[length - i - 1] = temp;
+  }
+
+  cout << number;
 }
