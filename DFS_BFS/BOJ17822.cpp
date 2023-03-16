@@ -84,74 +84,79 @@ void Check() {
     // Debugg();
 }
 
-bool BFS(int a, int b) {      // BFS
+bool BFS(int y, int x) {      // BFS
     queue<pair<int, int>> Q;  // BFS에서 사용할 Queue
     vector<pair<int, int>> V; // 인접한 값들의 위치를 저장할 Vector
-    Q.push(make_pair(a, b));
-    V.push_back(make_pair(a, b)); // 현재 값은 무조건 넣어주고 시작. (초기사이즈 = 1)
-    Visited[a][b] = true;
+    Q.push(make_pair(y, x));
+    Visited[y][x] = true;
+    int numSearch = disks[y][x];
+    int flag = false;
 
-    while (Q.empty() == 0) {
-        int C_Num = Q.front().first;
-        int Idx = Q.front().second;
+    while (!Q.empty()) {
+        int cur_y = Q.front().first;
+        int cur_x = Q.front().second;
         Q.pop();
 
-        int Left_Idx = Idx - 1;       // 같은 원판의 왼쪽 값
-        int Right_Idx = Idx + 1;      // 같은 원판의 오른쪽 값
-        int Left_Circle = C_Num - 1;  // 왼쪽 원판의 값
-        int Right_Circle = C_Num + 1; // 오른쪽 원판의 값
+        if (cur_y == 1) {
 
-        if (Left_Idx < 0)
-            Left_Idx = M - 1;
-        if (Right_Idx >= M)
-            Right_Idx = Right_Idx % M;
-
-        if (disks[C_Num][Idx] == disks[C_Num][Left_Idx]) {
-            if (Visited[C_Num][Left_Idx] == false) {
-                Visited[C_Num][Left_Idx] = true;
-                Q.push(make_pair(C_Num, Left_Idx));
-                V.push_back(make_pair(C_Num, Left_Idx));
-            }
-        }
-        if (disks[C_Num][Idx] == disks[C_Num][Right_Idx]) {
-            if (Visited[C_Num][Right_Idx] == false) {
-                Visited[C_Num][Right_Idx] = true;
-                Q.push(make_pair(C_Num, Right_Idx));
-                V.push_back(make_pair(C_Num, Right_Idx));
-            }
-        }
-        if (Left_Circle > 0) {
-            if (disks[C_Num][Idx] == disks[Left_Circle][Idx]) {
-                if (Visited[Left_Circle][Idx] == false) {
-                    Visited[Left_Circle][Idx] = true;
-                    Q.push(make_pair(Left_Circle, Idx));
-                    V.push_back(make_pair(Left_Circle, Idx));
+            for (int i = 1; i < 4; i++) {
+                int next_y = cur_y + dy[i];
+                int next_x = cur_x + dx[i];
+                if (next_x == -1) {
+                    next_x = M - 1;
+                } else {
+                    next_x = next_x % M;
+                }
+                if (disks[next_y][next_x] == numSearch && !Visited[next_y][next_x]) {
+                    Q.push(make_pair(next_y, next_x));
+                    Visited[next_y][next_x] = true;
+                    disks[cur_y][cur_x] = 0;
+                    disks[next_y][next_x] = 0;
+                    flag = true;
                 }
             }
-        }
-        if (Right_Circle <= N) {
-            if (disks[C_Num][Idx] == disks[Right_Circle][Idx]) {
-                if (Visited[Right_Circle][Idx] == false) {
-                    Visited[Right_Circle][Idx] = true;
-                    Q.push(make_pair(Right_Circle, Idx));
-                    V.push_back(make_pair(Right_Circle, Idx));
+
+        } else if (cur_y == N) {
+            for (int i = 0; i < 4; i++) {
+                if (i == 2)
+                    continue;
+                int next_y = cur_y + dy[i];
+                int next_x = cur_x + dx[i];
+                if (next_x == -1) {
+                    next_x = M - 1;
+                } else {
+                    next_x = next_x % M;
+                }
+                if (disks[next_y][next_x] == numSearch && !Visited[next_y][next_x]) {
+                    Q.push(make_pair(next_y, next_x));
+                    Visited[next_y][next_x] = true;
+                    disks[cur_y][cur_x] = 0;
+                    disks[next_y][next_x] = 0;
+                    flag = true;
+                }
+            }
+
+        } else {
+            for (int i = 0; i < 4; i++) {
+                int next_y = cur_y + dy[i];
+                int next_x = cur_x + dx[i];
+                if (next_x == -1) {
+                    next_x = M - 1;
+                } else {
+                    next_x = next_x % M;
+                }
+                if (disks[next_y][next_x] == numSearch && !Visited[next_y][next_x]) {
+                    Q.push(make_pair(next_y, next_x));
+                    Visited[next_y][next_x] = true;
+                    disks[cur_y][cur_x] = 0;
+                    disks[next_y][next_x] = 0;
+                    flag = true;
                 }
             }
         }
     }
 
-    if (V.size() == 1) // 크기가 1이다. = 인접한 값들 중 똑같은 값을 가진 놈이 없다.
-    {
-        return false;
-    } else // 그게 아니면 인접한 값들 중 똑같은 값을 가진 놈이 있다.
-    {
-        for (int i = 0; i < V.size(); i++) {
-            int x = V[i].first;
-            int y = V[i].second;
-            disks[x][y] = 0;
-        }
-        return true;
-    }
+    return flag;
 }
 
 int Calculate() {
