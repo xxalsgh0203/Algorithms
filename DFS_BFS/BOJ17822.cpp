@@ -84,9 +84,8 @@ void Check() {
     // Debugg();
 }
 
-bool BFS(int y, int x) {      // BFS
-    queue<pair<int, int>> Q;  // BFS에서 사용할 Queue
-    vector<pair<int, int>> V; // 인접한 값들의 위치를 저장할 Vector
+bool BFS(int y, int x) {     // BFS
+    queue<pair<int, int>> Q; // BFS에서 사용할 Queue
     Q.push(make_pair(y, x));
     Visited[y][x] = true;
     int numSearch = disks[y][x];
