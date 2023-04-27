@@ -4,27 +4,25 @@
 using namespace std;
 
 int main() {
-    stack<int> st;
+    stack<int> temp;
+    vector<char> result;
     int n;
     cin >> n;
-    vector<char> result;
-    vector<int> input(n);
-    int number = 1;
+    int cnt = 1;
     for (int i = 0; i < n; i++) {
-        int a;
-        cin >> a;
-        if (!st.empty() && st.top() == a) {
-            st.pop();
+        int number;
+        cin >> number;
+        if (temp.top() == number) {
             result.push_back('-');
-        } else if (number <= a) {
-
-            while (number <= a) {
-                st.push(number++);
+            temp.pop();
+        } else if (number >= cnt) {
+            while (number >= cnt) {
+                temp.push(cnt++);
                 result.push_back('+');
             }
-            st.pop();
             result.push_back('-');
-        } else if (!st.empty() && st.top() > a) {
+            temp.pop();
+        } else if () {
             cout << "NO";
             return 0;
         }
