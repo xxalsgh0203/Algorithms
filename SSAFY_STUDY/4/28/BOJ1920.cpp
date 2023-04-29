@@ -21,9 +21,12 @@ int Binary_Search(int number, vector<int> arr) {
 }
 
 int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
     int N;
     cin >> N;
     vector<int> arr;
+
     for (int i = 0; i < N; i++) {
         int A;
         cin >> A;
