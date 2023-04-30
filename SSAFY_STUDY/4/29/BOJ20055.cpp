@@ -1,73 +1,80 @@
-#include <deque>
 #include <iostream>
-#include <vector>
-
+#include <queue>
 using namespace std;
+int N, K;
+int Start, End;
+int arr[1001];
+bool visited[1001];
+queue<int> robot;
+int empty_space = 0;
 
-deque<int> naegu;
-deque<bool> conveyer;
+void MoveBeltWithRobot() {
+    Start--;
+    End--;
 
-int N, K, step;
-
-void rotate() {
-    conveyer.push_front(conveyer.back());
-    conveyer.pop_back();
-
-    naegu.push_front(naegu.back());
-    naegu.pop_back();
-    conveyer[N - 1] = false;
+    if (Start < 1)
+        Start = 2 * N;
+    if (End < 1)
+        End = 2 * N;
 }
 
-void move() {
-    for (int i = N - 2; i >= 0; i--) {
-        if ((!conveyer[i + 1]) && (naegu[i + 1] > 0) && (conveyer[i])) {
-            conveyer[i] = false;
-            conveyer[i + 1] = true;
-            naegu[i + 1]--;
+void MoveRobot() {
+    int Size = robot.size();
+    for (int i = 0; i < Size; i++) {
+        int cur = robot.front();
+        visited[cur] = false;
+        robot.pop();
+
+        if (cur == End)
+            continue;
+
+        int next = cur + 1;
+        if (next > 2 * N)
+            next = 1;
+
+        if (visited[next] == false && arr[next] >= 1) {
+            arr[next]--;
+            if (arr[next] == 0)
+                empty_space++;
+            if (next == End)
+                continue;
+            visited[next] = true;
+            robot.push(next);
+        } else {
+            robot.push(cur);
+            visited[cur] = true;
         }
     }
-    conveyer[N - 1] = false;
 }
 
-void put_robot() {
-    if (!conveyer[0] && naegu[0] > 0) {
-        conveyer[0] = true;
-        naegu[0]--;
+void PushRobot() {
+    if (visited[Start] == false && arr[Start] >= 1) {
+        visited[Start] = true;
+        arr[Start]--;
+        robot.push(Start);
+        if (arr[Start] == 0) {
+            empty_space++;
+        }
     }
-}
-
-int check() {
-    int count_ = 0;
-    for (int i = 0; i < 2 * N; i++) {
-        if (naegu[i] == 0)
-            count_++;
-    }
-    return count_;
 }
 
 int main() {
-    step = 1;
-
     cin >> N >> K;
-    for (int i = 0; i < 2 * N; i++) {
-        int in;
-        cin >> in;
-        naegu.push_back(in);
-        conveyer.push_back(false);
+    for (int i = 1; i <= 2 * N; i++) {
+        int belt;
+        cin >> belt;
+        arr[i] = belt;
     }
 
-    while (true) {
-        rotate();
-        move();
-        put_robot();
+    int cnt = 0;
+    Start = 1;
+    End = N;
 
-        int c = check();
-        if (c >= K) {
-            cout << step << "\n";
-            return 0;
-        }
-        step++;
+    while (empty_space < K) {
+        cnt++;
+        MoveBeltWithRobot();
+        MoveRobot();
+        PushRobot();
     }
-
-    return 0;
+    cout << cnt;
 }
