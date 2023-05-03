@@ -5,18 +5,16 @@ using namespace std;
 int main() {
     int testcase;
     cin >> testcase;
+
     for (int tc = 0; tc < testcase; tc++) {
         int N;
-        vector<int> points;
-        bool visited[10001];
         cin >> N;
+        int points[10001];
+        bool visited[10001];
         for (int i = 0; i < N; i++) {
-            int test_result;
-            cin >> test_result;
-            points.push_back(test_result);
+            cin >> points[i];
         }
 
-        visited[0] = true;
         vector<int> v;
         v.push_back(0);
 
@@ -25,13 +23,12 @@ int main() {
         }
 
         for (int i = 0; i < N; i++) {
-            int len = v.size();
-            for (int j = 0; j < len; j++) {
-                int curr = v[j];
-                int next = curr + points[i];
-                if (!visited[next]) {
-                    v.push_back(next);
-                    visited[next] = true;
+            int SIZE = v.size();
+            for (int j = 0; j < SIZE; j++) {
+                int total_point = points[i] + v[j];
+                if (!visited[total_point]) {
+                    visited[total_point] = true;
+                    v.push_back(total_point);
                 }
             }
         }
