@@ -1,3 +1,4 @@
+#include <cstring>
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -8,7 +9,6 @@ bool visited[12][6];
 bool flag = true;
 vector<pair<int, int>> same_puyos;
 vector<pair<int, int>> will_be_destroyed;
-int temp_cnt = 0;
 
 int dy[4] = {-1, 0, 1, 0};
 int dx[4] = {0, 1, 0, -1};
@@ -23,10 +23,10 @@ void Gravity() {
             }
         }
         for (int i = 0; i < temp.size(); i++) {
-            map[11 - y][x] = temp[i];
+            map[11 - i][x] = temp[i];
         }
         for (int i = 11 - temp.size(); i >= 0; i--) {
-            map[y][x] = '.';
+            map[i][x] = '.';
         }
     }
 }
@@ -74,6 +74,18 @@ void Destroy() {
     }
 }
 
+void Debugg() {
+    for (int i = 0; i < 12; i++) {
+        for (int j = 0; j < 6; j++) {
+            cout << map[i][j] << " ";
+        }
+        cout << '\n';
+    }
+
+    cout << '\n';
+    cout << '\n';
+}
+
 int main() {
 
     for (int i = 0; i < 12; i++) {
@@ -86,6 +98,7 @@ int main() {
 
     while (flag) {
         will_be_destroyed.clear();
+        memset(visited, false, sizeof(visited));
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 6; j++) {
                 if (map[i][j] != '.' && !visited[i][j]) {
@@ -95,10 +108,8 @@ int main() {
 
                     if (same_puyos.size() >= 4) {
                         for (int k = 0; k < same_puyos.size(); k++) {
-                            will_be_destroyed.push(same_puyos[i]);
+                            will_be_destroyed.push_back(same_puyos[k]);
                         }
-                    } else {
-                        flag = false;
                     }
 
                     same_puyos.clear();
@@ -106,11 +117,13 @@ int main() {
             }
         }
 
-        Destroy();
-        Gravity();
-
-        if (flag) {
+        if (will_be_destroyed.size() >= 4) {
+            Destroy();
+            Gravity();
             cnt++;
+            // Debugg();
+        } else {
+            break;
         }
     }
 
