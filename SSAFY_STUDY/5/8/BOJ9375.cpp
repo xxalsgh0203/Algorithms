@@ -25,6 +25,6 @@ int main() {
             result *= (i.second + 1);
         }
 
-        cout << result - 1; // 다 안입는 경우
+        cout << result - 1 << '\n'; // 다 안입는 경우
     }
 }
