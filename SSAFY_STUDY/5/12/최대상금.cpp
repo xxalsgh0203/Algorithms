@@ -10,7 +10,7 @@ using namespace std;
 int ans;
 bool check[1000000][11];
 int num = 1;
-int change;
+int count;
 
 void sol(string s, int cnt) {
     if (cnt == 0) {
@@ -35,15 +35,15 @@ void sol(string s, int cnt) {
 int main() {
     int t;
     cin >> t;
-    while (t--) {
-        string st;
-        cin >> st;
+    for (int tc = 1; tc <= t; t++) {
+        string S;
+        cin >> S;
 
-        cin >> change;
+        cin >> count;
 
-        sol(st, change);
+        sol(S, count);
 
-        cout << '#' << num << ' ' << ans << '\n';
+        cout << '#' << tc << ' ' << ans << '\n';
         ans = 0;
         memset(check, false, sizeof(check));
         num++;
