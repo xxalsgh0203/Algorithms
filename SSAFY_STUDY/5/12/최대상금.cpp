@@ -1,52 +1,58 @@
 #include <algorithm>
-#include <cstring>
 #include <iostream>
-#include <math.h>
-#include <queue>
-#include <stack>
-#include <string>
 #include <vector>
 using namespace std;
-int ans;
-bool check[1000000][11];
-int num = 1;
-int count;
-
-void sol(string s, int cnt) {
-    if (cnt == 0) {
-        int temp = stoi(s);
-        ans = max(ans, temp);
-        return;
-    }
-
-    for (int i = 0; i < s.length() - 1; i++) {
-        for (int j = i + 1; j < s.length(); j++) {
-            swap(s[i], s[j]);
-            int Temp = stoi(s);
-            if (check[Temp][cnt - 1] == false) {
-                check[Temp][cnt - 1] = true;
-                sol(s, cnt - 1);
-            }
-            swap(s[i], s[j]);
-        }
-    }
-}
 
 int main() {
-    int t;
-    cin >> t;
-    for (int tc = 1; tc <= t; t++) {
-        string S;
-        cin >> S;
+    int testcase;
+    cin >> testcase;
 
-        cin >> count;
+    for (int tc = 1; tc <= testcase; tc++) {
 
-        sol(S, count);
+        vector<int> results;
 
-        cout << '#' << tc << ' ' << ans << '\n';
-        ans = 0;
-        memset(check, false, sizeof(check));
-        num++;
+        string numbers;
+        int cnt;
+        cin >> numbers >> cnt;
+
+        for (int i = 0; i < numbers.length(); i++) {
+            results.push_back(numbers[i] - '0');
+        }
+
+        int index = 0;
+        int count = 0;
+
+        while (cnt != 0) {
+            int max_num = 0;
+            int max_index = index;
+            // find max value and max index
+            for (int i = index; i < results.size(); i++) {
+                if (max_num <= results[i]) {
+                    max_num = results[i];
+                    max_index = i;
+                }
+            }
+            // swap
+            int temp = results[index];
+            results[index] = max_num;
+            results[max_index] = temp;
+
+            index++;
+            if (index != max_index)
+                cnt--;
+
+            if (index >= results.size() - 1) {
+                // 끝에 두개 swap
+                int temp_T = results[results.size() - 2];
+                results[results.size() - 2] = results[results.size() - 1];
+                results[results.size() - 1] = temp_T;
+            }
+        }
+
+        cout << "#" << tc << " ";
+        for (int i = 0; i < results.size(); i++) {
+            cout << results[i];
+        }
+        cout << '\n';
     }
-    return 0;
 }
