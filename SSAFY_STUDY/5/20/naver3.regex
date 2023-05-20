@@ -3,3 +3,5 @@ import re
     s =["USD 0.10", "GBP  1,123", "GBP 1,123,412", "CAD 10.00", "CAD 10", "ABC 10", "qUSD 10", "USD 10q", "CAD 10.1231", "USD 012.12"]
 
         for str in s:print(str, end = "  ") print(re.search(r '^(USD|GBP|CAD)\ (0|([1-9]\d*(,\d+)*))(\.\d\d)?$', str))
+
+// https://www.chegg.com/homework-help/questions-and-answers/regular-expression-salaries-python-regular-expression-look-like-question-detailed-explanat-q70863900

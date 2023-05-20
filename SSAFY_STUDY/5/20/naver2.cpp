@@ -55,3 +55,5 @@ int solution(vector<string> &T, vector<string> &R) {
     int result = (scored * 100) / total;
     return result;
 }
+
+// https://www.chegg.com/homework-help/questions-and-answers/nathan-completed-first-programming-test-wondering-score-received-email-containing-final-re-q99063957
